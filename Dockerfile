@@ -1,8 +1,11 @@
-# Declare a base image:
-FROM httpd:alpine
+FROM mysterysd/wzmlx:latest
 
-# Tell Aptible this app will be accessible over port 80:
-EXPOSE 80
+WORKDIR /usr/src/app
+RUN chmod 777 /usr/src/app
 
-# Tell Aptible to run "httpd -f" to start this app:
-CMD ["httpd", "-f"]
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["bash", "start.sh"]
